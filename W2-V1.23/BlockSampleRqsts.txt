@@ -1,0 +1,152 @@
+<q:dispatchFIBlockInputMQ xmlns:q="http://BEA-Solution_Library/ProcessLib/Block/DispatchFIBlockInputMQ">
+   <dispatchFIBlockInputMQRq xmlns:msl="http://www.ibm.com/xmlmap" xmlns:out="http://www.sama.bea.sa/execution/FIBlock" xmlns:io4="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:io2="http://www.sama.bea.sa/common/Header" xmlns:io3="http://BEA-Solution_Library/ProcessLib/Block" xmlns:in2="http://BEA-Solution_Library/ProcessLib/Common" xmlns:io="http://www.sama.bea.sa/common/BaseLib" xmlns:in="http://BEA-Solution_Module/ProcessInter/ValidateProcess" xmlns:xs4xs="http://www.w3.org/2001/XMLSchema">
+      <rqHdr>
+         <io2:PID>90050</io2:PID>
+         <io2:MsgDtTm>2018-10-23T14:56:35</io2:MsgDtTm>
+         <io2:ChID>B2B</io2:ChID>
+         <io2:MsgUID>101002018126001001456-S225273333433278581</io2:MsgUID>
+         <io2:SRN>101002018126001001456</io2:SRN>
+         <io2:Cnfd>1</io2:Cnfd>
+         <io2:Mod>0</io2:Mod>
+         <io2:Clsf>R1</io2:Clsf>
+         <io2:pHash/>
+      </rqHdr>
+      <FIBlockRq>
+         <out:Rqstr xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wr="http://www.ibm.com/xmlns/prod/websphere/sca/multipart/wrapper/6.0.0" xmlns:ns0="http://BEA-Solution_Library/ProcessLib/Block" xmlns:val="http://BEA-Solution_Library/ProcessLib/Block/ValidateRPBlockInput">
+            <bas:PID xmlns:bas="http://www.sama.bea.sa/common/BaseLib">10100</bas:PID>
+            <bas:RID xmlns:bas="http://www.sama.bea.sa/common/BaseLib">210001</bas:RID>
+            <bas:Name xmlns:bas="http://www.sama.bea.sa/common/BaseLib">محمد أحمد</bas:Name>
+            <!--Optional:-->
+            <bas:Pstn xmlns:bas="http://www.sama.bea.sa/common/BaseLib">قاضي</bas:Pstn>
+            <bas:RRN xmlns:bas="http://www.sama.bea.sa/common/BaseLib">RRN123803298999265666101234561</bas:RRN>
+            <bas:GeoLoc xmlns:bas="http://www.sama.bea.sa/common/BaseLib">01001-004001000000</bas:GeoLoc>
+         </out:Rqstr>
+         <out:InvPrty xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wr="http://www.ibm.com/xmlns/prod/websphere/sca/multipart/wrapper/6.0.0" xmlns:ns0="http://BEA-Solution_Library/ProcessLib/Block" xmlns:val="http://BEA-Solution_Library/ProcessLib/Block/ValidateRPBlockInput">
+            <!--You have a CHOICE of the next 5 items at this level-->
+            <bas:Indv xmlns:bas="http://www.sama.bea.sa/common/BaseLib">
+               <bas:Id>8888</bas:Id>
+               <bas:IdType>RID</bas:IdType>
+               <bas:frstName>محمد</bas:frstName>
+               <!--Optional:-->
+               <bas:scndName>سمير</bas:scndName>
+               <!--Optional:-->
+               <bas:thrdName>احمد</bas:thrdName>
+               <!--Optional:-->
+               <bas:lstName>السيد</bas:lstName>
+               <bas:Ntnlty>EGY</bas:Ntnlty>
+            </bas:Indv>
+         </out:InvPrty>
+         <out:DcsnInfo/>
+      </FIBlockRq>
+   </dispatchFIBlockInputMQRq>
+</q:dispatchFIBlockInputMQ>
+
+
+
+====================================BlockRPReply ================================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<p:DispatchRPBlockReplyMQRq xmlns:p="http://BEA-Solution_Library/ProcessLib/Block" xmlns:ns0="http://BEA-Solution_Library/ProcessLib/Block" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="p:DispatchRPBlockReplyMQRq">
+  <rqHdr xmlns:dis="http://BEA-Solution_Library/ProcessLib/Block/DispatchRPBlockReply">
+               <head:PID xmlns:head="http://www.sama.bea.sa/common/Header">gero</head:PID>
+               <!--Optional:-->
+               <head:Sys xmlns:head="http://www.sama.bea.sa/common/Header">GOV Portal</head:Sys>
+               <head:MsgDtTm xmlns:head="http://www.sama.bea.sa/common/Header">aeoliam venitaeolia</head:MsgDtTm>
+               <!--Optional:-->
+               <head:ChID xmlns:head="http://www.sama.bea.sa/common/Header">B2B</head:ChID>
+               <head:MsgUID xmlns:head="http://www.sama.bea.sa/common/Header">verrantque per auras</head:MsgUID>
+               <!--Optional:-->
+               <head:OvrdMsgUID xmlns:head="http://www.sama.bea.sa/common/Header">per auras</head:OvrdMsgUID>
+               <!--Optional:-->
+               <head:SRN xmlns:head="http://www.sama.bea.sa/common/Header">circum claustra</head:SRN>
+               <!--Optional:-->
+               <head:Cnfd xmlns:head="http://www.sama.bea.sa/common/Header">1</head:Cnfd>
+               <!--Optional:-->
+               <head:Mod xmlns:head="http://www.sama.bea.sa/common/Header">-2</head:Mod>
+               <!--Optional:-->
+               <head:CRN xmlns:head="http://www.sama.bea.sa/common/Header">foedere certo</head:CRN>
+               <!--Optional:-->
+               <head:Clsf xmlns:head="http://www.sama.bea.sa/common/Header">R2</head:Clsf>
+               <!--Optional:-->
+               <head:pHash xmlns:head="http://www.sama.bea.sa/common/Header">sceptra tenens</head:pHash>
+               <!--Optional:-->
+               <head:IPAdrs xmlns:head="http://www.sama.bea.sa/common/Header">turbine corripuit scopuloque</head:IPAdrs>
+               <!--Optional:-->
+               <head:Status xmlns:head="http://www.sama.bea.sa/common/Header">flammato</head:Status>
+               <!--Optional:-->
+               <head:Note xmlns:head="http://www.sama.bea.sa/common/Header">profundum quippe ferant</head:Note>
+               <!--Optional:-->
+               <head:Info xmlns:head="http://www.sama.bea.sa/common/Header">
+                  <!--1 or more repetitions:-->
+                  <bas:Attribute xmlns:bas="http://www.sama.bea.sa/common/BaseLib">
+                     <bas:Name>nubibus ignem disiecitque</bas:Name>
+                     <bas:Value>ac vinclis et</bas:Value>
+                  </bas:Attribute>
+               </head:Info>
+            </rqHdr>
+  <RPBlockCallbackRq xmlns:dis="http://BEA-Solution_Library/ProcessLib/Block/DispatchRPBlockReply">
+               <rpb:BlockSmryInfo xmlns:rpb="http://www.sama.bea.sa/execution/RPBlock">
+                  <exec:TotAmt xmlns:exec="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib">1000.00</exec:TotAmt>
+                  <exec:PndngAmt xmlns:exec="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib">1000.00</exec:PndngAmt>
+               </rpb:BlockSmryInfo>
+               <rpb:FIRsBlockDtls xmlns:rpb="http://www.sama.bea.sa/execution/RPBlock">
+                  <!--1 or more repetitions:-->
+                  <exec:FIRsBlockInfo xmlns:exec="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib">
+                     <exec:FICode>rapid</exec:FICode>
+                     <exec:FIRsStatus>caelumqu</exec:FIRsStatus>
+                     <!--Optional:-->
+                     <exec:CustInfo>
+                        <bas:CustName xmlns:bas="http://www.sama.bea.sa/common/BaseLib">circum claustra</bas:CustName>
+                        <bas:Id xmlns:bas="http://www.sama.bea.sa/common/BaseLib">coniunx una</bas:Id>
+                        <bas:IdType xmlns:bas="http://www.sama.bea.sa/common/BaseLib">arce scept</bas:IdType>
+                        <!--Optional:-->
+                        <bas:Ntnlty xmlns:bas="http://www.sama.bea.sa/common/BaseLib">cir</bas:Ntnlty>
+                     </exec:CustInfo>
+                     <!--Optional:-->
+                     <exec:SmryInfo>
+                        <exec:TotAmt>1000.00</exec:TotAmt>
+                        <exec:PndngAmt>1000.00</exec:PndngAmt>
+                     </exec:SmryInfo>
+                     <!--Optional:-->
+                     <exec:BlocksList>
+                        <!--1 or more repetitions:-->
+                        <exec:AccBlockInfo>
+                           <exec:AccNum>certo et premere</exec:AccNum>
+                           <exec:IBAN>et montiset montiset mon</exec:IBAN>
+                           <exec:AccCur>feta furentibus</exec:AccCur>
+                           <exec:SrcAmt>1000.00</exec:SrcAmt>
+                           <exec:JntAcc>true</exec:JntAcc>
+                           <exec:BlockAmt>1000.00</exec:BlockAmt>
+                           <exec:FXRate>1000.00</exec:FXRate>
+                           <exec:BlockDtTm>pectore flammaspect</exec:BlockDtTm>
+                        </exec:AccBlockInfo>
+                     </exec:BlocksList>
+                     <!--Optional:-->
+                     <exec:PrdUsrsList>
+                        <!--1 or more repetitions:-->
+                        <bas:UsrInfo xmlns:bas="http://www.sama.bea.sa/common/BaseLib">
+                           <bas:Id>pectore flammas</bas:Id>
+                           <bas:IdType>annos bell</bas:IdType>
+                           <bas:Name>certo et</bas:Name>
+                           <bas:UsrType>03</bas:UsrType>
+                        </bas:UsrInfo>
+                     </exec:PrdUsrsList>
+                     <!--Optional:-->
+                     <exec:ShrsList>
+                        <bas:CmpnyName xmlns:bas="http://www.sama.bea.sa/common/BaseLib">bella gero</bas:CmpnyName>
+                        <!--Optional:-->
+                        <bas:ShrPrcnt xmlns:bas="http://www.sama.bea.sa/common/BaseLib">100.00</bas:ShrPrcnt>
+                     </exec:ShrsList>
+                     <!--Optional:-->
+                     <exec:JntAcctsList>
+                        <!--1 or more repetitions:-->
+                        <bas:JntAccInfo xmlns:bas="http://www.sama.bea.sa/common/BaseLib">
+                           <bas:AccNum>dedit qui foedere</bas:AccNum>
+                           <!--Optional:-->
+                           <bas:IBAN>magno cummagno cummagno</bas:IBAN>
+                        </bas:JntAccInfo>
+                     </exec:JntAcctsList>
+                  </exec:FIRsBlockInfo>
+               </rpb:FIRsBlockDtls>
+            </RPBlockCallbackRq>
+</p:DispatchRPBlockReplyMQRq>

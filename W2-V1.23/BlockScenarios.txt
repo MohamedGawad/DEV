@@ -1,0 +1,50 @@
+S9000003	Not a customer and added to the Black List
+S9000004	Warning: There is increasement in the available blocked amount
+S9000005	Warning: No action taken because the specified account is not exist
+S9000006	Not a customer and the specified account is not exist
+S9000007	Warning: Known Customer and the action taken on the specified account and this account does not belong to the specified Involoved Party (Customer)
+S9000008	Warning: Known Customer and no action taken because the specified account is not exist
+S9000009	Warning: Unknown Customer and the action is taken the specified account
+
+*scenario 1 [Amount is fulfilled from one FI]
+90080 >>> S0000000 >>> 10000
+90005 >>> S0000000 >>> 5500
+90060 >>> S9000003 >>> 0
+90082 >>> S9000003 >>> 0
+
+*scenario 2 [Amount is fulfilled from more one FIs]
+90005 >>> S0000000 >>> 3600
+90065 >>> S0000000 >>> 5500
+90050 >>> S0000000 >>> 7423
+90045 >>> S9000003 >>> 0
+
+scenario 3 [Amount is not fulfilled from more one FIs]
+90010 >>> S0000000 >>> 1600
+90055 >>> S0000000 >>> 50
+--90015 >>> S0000000 >>> 800
+90030 >>> S9000003 >>> 0
+
+
+scenario 4 [Amount is fulfilled from one FI] [Account exist - one FI]
+90075 >>> S0000000 >>> 10000
+
+scenario 4A [Amount is not fulfilled from one FI] [Account exist - one FI]
+90075 >>> S0000000 >>> 5000
+
+*scenario 5 [Amount is not fulfilled from one FI] [Unknown Customer and Account not exist - one FI]
+90075 >>> S9000006 >>> 0
+
+scenario 6 [Amount is fulfilled from one FI] [Known Customer and Account not belong to the Customer - one FI]
+90075 >>> S9000007 >>> 10000
+
+scenario 6A [Amount is fulfilled from one FI] [Known Customer and Account not belong to the Customer - one FI]
+90075 >>> S9000007 >>> 4000
+
+*scenario 7 [Amount is not fulfilled from one FI] [Known Customer and Account not exist - one FI]
+90075 >>> S9000008 >>> 0
+
+scenario 8 [Amount is fulfilled from one FI] [Account exist and Unknown Customer - one FI]
+90075 >>> S9000009 >>> 10000
+
+scenario 8A [Amount is fulfilled from one FI] [Account exist and Unknown Customer - one FI]
+90075 >>> S9000009 >>> 3000
