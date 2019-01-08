@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:receiveFIBlockReply xsi:type="p:receiveFIBlockReply_._type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ba="http://www.sama.bea.sa/common/BaseLib" xmlns:Ex="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib" xmlns:FI="http://www.sama.bea.sa/execution/FIBlock" xmlns:He="http://www.sama.bea.sa/common/Header" xmlns:p="http://BEA-Solution_Library/ProcessLib/Block/ReceiveFIBlockReply">
+  <receiveFIBlockReplyParam>
+    <rqHdr>
+      <He:PID>90010</He:PID>
+      <He:MsgDtTm>2018-10-30T12:33:07</He:MsgDtTm>
+      <He:ChID>B2B</He:ChID>
+      <He:MsgUID>S523945727379626</He:MsgUID>
+      <He:SRN>1800100001012</He:SRN>
+      <He:Cnfd>1</He:Cnfd>
+      <He:Mod>1</He:Mod>
+      <He:CRN>1800100001012-S523945727379626</He:CRN>
+      <He:Clsf>R1</He:Clsf>
+      <He:Status>S0000000</He:Status>
+    </rqHdr>
+    <FIBlockCallBackRq>
+      <FI:CustInfo>
+        <Ba:CustName>Mohamed Gawad</Ba:CustName>
+        <Ba:Id>241345679</Ba:Id>
+        <Ba:IdType>RID</Ba:IdType>
+        <Ba:Ntnlty>EGY</Ba:Ntnlty>
+      </FI:CustInfo>
+    </FIBlockCallBackRq>
+    <instanceId>1800100001012</instanceId>
+  </receiveFIBlockReplyParam>
+</p:receiveFIBlockReply>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<p:receiveFIBlockReply xsi:type="p:receiveFIBlockReply_._type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ba="http://www.sama.bea.sa/common/BaseLib" xmlns:Ex="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib" xmlns:FI="http://www.sama.bea.sa/execution/FIBlock" xmlns:He="http://www.sama.bea.sa/common/Header" xmlns:p="http://BEA-Solution_Library/ProcessLib/Block/ReceiveFIBlockReply">
+  <receiveFIBlockReplyParam>
+    <rqHdr>
+      <He:PID>90030</He:PID>
+      <He:MsgDtTm>2018-10-30T12:33:07</He:MsgDtTm>
+      <He:ChID>B2B</He:ChID>
+      <He:MsgUID>S523945727379626</He:MsgUID>
+      <He:SRN>1800100001012</He:SRN>
+      <He:Cnfd>1</He:Cnfd>
+      <He:Mod>1</He:Mod>
+      <He:CRN>1800100001012-S523945727379626</He:CRN>
+      <He:Clsf>R1</He:Clsf>
+      <He:Status>S9000003</He:Status>
+    </rqHdr>
+    <FIBlockCallBackRq/>
+    <instanceId>1800100001012</instanceId>
+  </receiveFIBlockReplyParam>
+</p:receiveFIBlockReply>
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<p:receiveFIBlockReply xsi:type="p:receiveFIBlockReply_._type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:He="http://www.sama.bea.sa/common/Header" xmlns:p="http://BEA-Solution_Library/ProcessLib/Block/ReceiveFIBlockReply">
+  <receiveFIBlockReplyParam>
+    <rsHdr>
+      <He:PID>90045</He:PID>
+      <He:Status>S1000000</He:Status>
+      <He:MsgDtTm>2018-10-30T13:56:18</He:MsgDtTm>
+      <He:SRN>1800100001012</He:SRN>
+      <He:CRN>1800100001012</He:CRN>
+    </rsHdr>
+    <instanceId>1800100001012</instanceId>
+  </receiveFIBlockReplyParam>
+</p:receiveFIBlockReply>
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<p:receiveFIBlockReply xsi:type="p:receiveFIBlockReply_._type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ba="http://www.sama.bea.sa/common/BaseLib" xmlns:Ex="http://www.sama.bea.sa/execution/common/ExecutionLibrary/ExecutionLib" xmlns:FI="http://www.sama.bea.sa/execution/FIBlock" xmlns:He="http://www.sama.bea.sa/common/Header" xmlns:p="http://BEA-Solution_Library/ProcessLib/Block/ReceiveFIBlockReply">
+  <receiveFIBlockReplyParam>
+    <rqHdr>
+      <He:PID>90010</He:PID>
+      <He:MsgDtTm>2018-10-30T12:33:07</He:MsgDtTm>
+      <He:ChID>B2B</He:ChID>
+      <He:MsgUID>S523945727379626</He:MsgUID>
+      <He:SRN>1800100001012</He:SRN>
+      <He:Cnfd>1</He:Cnfd>
+      <He:Mod>1</He:Mod>
+      <He:CRN>1800100001012-S523945727379626</He:CRN>
+      <He:Clsf>R1</He:Clsf>
+      <He:Status>S0000000</He:Status>
+    </rqHdr>
+    <FIBlockCallBackRq>
+      <FI:CustInfo>
+        <Ba:CustName>Mohamed Gawad</Ba:CustName>
+        <Ba:Id>241345679</Ba:Id>
+        <Ba:IdType>RID</Ba:IdType>
+        <Ba:Ntnlty>EGY</Ba:Ntnlty>
+      </FI:CustInfo>
+      <FI:BlocksList>
+        <Ex:AccBlockInfo>
+          <Ex:AccNum>666023201300077</Ex:AccNum>
+          <Ex:IBAN>SA8937040666023201300077</Ex:IBAN>
+          <Ex:AccCur>SAR</Ex:AccCur>
+          <Ex:SrcAmt>8350</Ex:SrcAmt>
+          <Ex:JntAcc>false</Ex:JntAcc>
+          <Ex:BlockAmt>8350</Ex:BlockAmt>
+          <Ex:FXRate>1</Ex:FXRate>
+          <Ex:BlockDtTm>2018-10-30T12:33:07</Ex:BlockDtTm>
+          <Ex:PrdUsrsList>
+            <Ba:UsrInfo>
+              <Ba:Id>2834404758</Ba:Id>
+              <Ba:IdType>RID</Ba:IdType>
+              <Ba:Name>سامح</Ba:Name>
+              <Ba:UsrType>01</Ba:UsrType>
+            </Ba:UsrInfo>
+          </Ex:PrdUsrsList>
+        </Ex:AccBlockInfo>
+      </FI:BlocksList>
+      <FI:ShrsList>
+        <Ba:ShrInfo>
+          <Ba:CmpnyName>sawaaa</Ba:CmpnyName>
+          <Ba:ShrPrcnt>50</Ba:ShrPrcnt>
+        </Ba:ShrInfo>
+      </FI:ShrsList>
+    </FIBlockCallBackRq>
+    <instanceId>1800100001012</instanceId>
+  </receiveFIBlockReplyParam>
+</p:receiveFIBlockReply>
+
+
