@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:figr="http://www.sama.bea.sa/execution/services/FIGarnish"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FIGarnish"
+    targetNamespace="http://www.sama.bea.sa/execution/services/FIGarnish" xmlns:gai="http://www.sama.bea.sa/execution/services/FIGarnish"
+    xmlns:head="http://www.sama.bea.sa/common/Header">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.sama.bea.sa/execution/services/FIGarnish" schemaLocation="../services/FIGarnish.xsd" />
+            <xsd:import namespace="http://www.sama.bea.sa/common/Header" schemaLocation="../../common/Header.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="FIGarnishRq">
+        <wsdl:part element="gai:FIGarnishRq" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="FIGarnishRs">
+        <wsdl:part element="gai:FIGarnishRs" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RqHdr">
+        <wsdl:part element="head:MsgHdrRq" name="header" />
+    </wsdl:message>
+    <wsdl:message name="RsHdr">
+        <wsdl:part element="head:MsgHdrRs" name="header" />
+    </wsdl:message>
+
+    <wsdl:portType name="FIGarnish">
+        <wsdl:operation name="FIGarnish">
+            <wsdl:input message="figr:FIGarnishRq" />
+            <wsdl:output message="figr:FIGarnishRs" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="FIGarnishSOAP" type="figr:FIGarnish">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="FIGarnish">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+                <soap:header message="figr:RqHdr" part="header" use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+                <soap:header message="figr:RsHdr" part="header" use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="FIGarnish">
+        <wsdl:port binding="figr:FIGarnishSOAP" name="FIGarnishSOAP">
+            <soap:address location="http://www.sama.bea.sa/" />
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:rplf="http://www.sama.bea.sa/execution/services/RPLiftCallBack"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RPLiftCallBack"
+    targetNamespace="http://www.sama.bea.sa/execution/services/RPLiftCallBack" xmlns:gs-ai="http://www.sama.bea.sa/execution/services/RPLift"
+    xmlns:head="http://www.sama.bea.sa/common/Header">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+             <xsd:import namespace="http://www.sama.bea.sa/execution/services/RPLift" schemaLocation="../services/RPLift.xsd" />
+            <xsd:import namespace="http://www.sama.bea.sa/common/Header" schemaLocation="../../common/Header.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="RPLiftCallBackRq">
+        <wsdl:part element="gs-ai:RPLiftCallBackRq" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RPLiftCallBackRs">
+        <wsdl:part element="gs-ai:RPLiftCallBackRs" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RqHdr">
+        <wsdl:part element="head:MsgHdrRq" name="header" />
+    </wsdl:message>
+    <wsdl:message name="RsHdr">
+        <wsdl:part element="head:MsgHdrRs" name="header" />
+    </wsdl:message>
+
+    <wsdl:portType name="RPLiftCallBack">
+        <wsdl:operation name="RPLiftCallBack">
+            <wsdl:input message="rplf:RPLiftCallBackRq" />
+            <wsdl:output message="rplf:RPLiftCallBackRs" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="RPLiftCallBackSOAP" type="rplf:RPLiftCallBack">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="RPLiftCallBack">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+                <soap:header message="rplf:RqHdr" part="header" use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+                <soap:header message="rplf:RsHdr" part="header" use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="RPLiftCallBack">
+        <wsdl:port binding="rplf:RPLiftCallBackSOAP" name="RPLiftCallBackSOAP">
+            <soap:address location="http://www.sama.bea.sa/" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

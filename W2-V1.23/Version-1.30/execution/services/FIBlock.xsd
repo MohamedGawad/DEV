@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.sama.bea.sa/execution/services/FIBlock"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:base="http://www.sama.bea.sa/common/BaseLib"
+	xmlns:ex-lib="http://www.sama.bea.sa/execution/services/ExecutionLib"
+	xmlns:ai="http://www.sama.bea.sa/execution/services/FIBlock">
+
+	<import namespace="http://www.sama.bea.sa/common/BaseLib"
+		schemaLocation="../../common/BaseLib.xsd" />
+
+	<import
+		namespace="http://www.sama.bea.sa/execution/services/ExecutionLib"
+		schemaLocation="../services/ExecutionLib.xsd" />
+
+	<element name="FIBlockRq" type="ai:T_FIBlockRq"></element>
+
+	<element name="FIBlockRs" type="ai:T_FIBlockRs"></element>
+
+	<complexType name="T_FIBlockRq">
+		<sequence>
+			<element name="Rqstr" type="base:T_Rqstr" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="InvPrty" type="base:T_InvPrty" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="ThrdPrty" type="base:T_ThrdPrty"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			
+			<element name="Outline" type="ex-lib:T_FIBlockOutline"
+				maxOccurs="1" minOccurs="1">
+			</element>
+		
+		</sequence>
+	</complexType>
+
+	<complexType name="T_FIBlockRs"></complexType>
+
+	<element name="FIBlockCallBackRq" type="ai:T_FIBlockCallBackRq"></element>
+
+	<element name="FIBlockCallBackRs" type="ai:T_FIBlockCallBackRs"></element>
+
+
+	<complexType name="T_FIBlockCallBackRq">
+		<sequence>
+			<element name="CustInfo" type="base:T_CustInfo"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			<element name="SmryInfo" type="ex-lib:T_FIBlockSmryInfo" maxOccurs="1" minOccurs="0"></element>
+			
+			<element name="BlockDtlsInfo" type="ex-lib:T_ExeDtlsInfo"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			
+			<element name="InqDtlsInfo" type="ex-lib:T_InqDtlsInfo"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			
+		</sequence>
+	</complexType>
+
+	<complexType name="T_FIBlockCallBackRs"></complexType>
+
+</schema>

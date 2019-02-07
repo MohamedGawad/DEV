@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.sama.bea.sa/execution/services/FIBanDlng"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:base="http://www.sama.bea.sa/common/BaseLib"
+	xmlns:ex-lib="http://www.sama.bea.sa/execution/services/ExecutionLib"
+	xmlns:ai="http://www.sama.bea.sa/execution/services/FIBanDlng">
+	
+	<import namespace="http://www.sama.bea.sa/common/BaseLib"
+		schemaLocation="../../common/BaseLib.xsd" />
+
+	<import
+		namespace="http://www.sama.bea.sa/execution/services/ExecutionLib"
+		schemaLocation="../services/ExecutionLib.xsd" />
+
+	<element name="FIBanDlngRq" type="ai:T_FIBanDlngRq"></element>
+
+	<element name="FIBanDlngRs" type="ai:T_FIBanDlngRs"></element>
+
+	<complexType name="T_FIBanDlngRq">
+		<sequence>
+			<element name="Rqstr" type="base:T_Rqstr" maxOccurs="1" minOccurs="1"></element>
+			<element name="InvPrty" type="base:T_InvPrty" maxOccurs="1" minOccurs="1"></element>
+			<element name="ThrdPrty" type="base:T_ThrdPrty" maxOccurs="1" minOccurs="0"></element>
+			<element name="Outline" type="ex-lib:T_BanDlngOutline" maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="T_FIBanDlngRs">
+	</complexType>
+
+	<element name="FIBanDlngCallBackRq" type="ai:T_FIBanDlngCallBackRq"></element>
+
+	<element name="FIBanDlngCallBackRs" type="ai:T_FIBanDlngCallBackRs"></element>
+
+
+	<complexType name="T_FIBanDlngCallBackRq">
+		<sequence>
+			<element name="CustInfo" type="base:T_CustInfo" maxOccurs="1" minOccurs="0"></element>
+			<element name="ExeDtTm" minOccurs="1" type="base:T_MsgDtTm"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="T_FIBanDlngCallBackRs">
+	</complexType>
+
+</schema>

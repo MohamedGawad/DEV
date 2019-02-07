@@ -1,0 +1,34 @@
+Technical :
+
+remove soapAction value from FIxx Services interfaces
+
+update input message name and output message name of all xxCallBack services in WSDLs files to be CallBack instead of Callback .
+
+add new datatype [T_BaseAmt_PosAmt] to accept only positive amount .
+
+change transfered amount type of [T_BlockFundXfer] to be [T_BaseAmt_PosAmt].
+
+change [ChID] in header to be mandatory .
+
+Change names of all xxCallBack to be as the standard [xxCallBack] in the WSDL files .
+
+change value in Amt object to be T_BaseAmt_PosAmt.
+
+
+Business :
+
+RP
+Lift Services
+1- To give the ability to do partial lift
+Block Service
+1- To include the general block on the deposit and safe boxes
+2- To give the ability to the requesting party to make the auto transfer in case of cross currency
+Garnishment Service
+1- To include the general block on the deposit and safe boxes
+FI
+Lift Services
+1- To give the ability to do partial lift
+Block Service
+1- To include the general block on the deposit and safe boxes
+Garnishment Service
+1- To include the general block on the deposit and safe boxes

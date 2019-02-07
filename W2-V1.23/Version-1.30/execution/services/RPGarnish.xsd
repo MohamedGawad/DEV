@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.sama.bea.sa/execution/services/RPGarnish"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:base="http://www.sama.bea.sa/common/BaseLib"
+	xmlns:ex-lib="http://www.sama.bea.sa/execution/services/ExecutionLib"
+	xmlns:ai="http://www.sama.bea.sa/execution/services/RPGarnish">
+	
+	<import namespace="http://www.sama.bea.sa/common/BaseLib"
+		schemaLocation="../../common/BaseLib.xsd" />
+
+	<import
+		namespace="http://www.sama.bea.sa/execution/services/ExecutionLib"
+		schemaLocation="../services/ExecutionLib.xsd" />
+		
+	<element name="RPGarnishRq" type="ai:T_RPGarnishRq"></element>
+
+	<element name="RPGarnishRs" type="ai:T_RPGarnishRs"></element>
+
+	<complexType name="T_RPGarnishRq">
+		<sequence>
+			<element name="Rqstr" type="base:T_Rqstr" maxOccurs="1" minOccurs="1"></element>
+			<element name="InvPrty" type="base:T_RpInvPrty" maxOccurs="1" minOccurs="0"></element>
+			<element name="ThrdPrty" type="base:T_ThrdPrty" maxOccurs="1" minOccurs="0"></element>
+			<element name="Outline" type="ex-lib:T_RPGarnishOutline" maxOccurs="1" minOccurs="1"></element>
+			<element name="FinInst" type="base:T_FinInst" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="T_RPGarnishRs">
+	</complexType>
+
+	<element name="RPGarnishCallBackRq" type="ai:T_RPGarnishCallBackRq"></element>
+
+	<element name="RPGarnishCallBackRs" type="ai:T_RPGarnishCallBackRs"></element>
+
+
+	<complexType name="T_RPGarnishCallBackRq">
+		<sequence>
+			<element name="SmryInfo" type="ex-lib:T_RPGarnishSmryInfo" maxOccurs="1" minOccurs="0"></element>
+			<element name="FIRsGarnishDtls" type="ex-lib:T_FIRsGarnishDtls" maxOccurs="1" minOccurs="1"></element>
+			
+		</sequence>
+	</complexType>
+
+	<complexType name="T_RPGarnishCallBackRs">
+	</complexType>
+
+</schema>
