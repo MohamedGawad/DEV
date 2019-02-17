@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:rpgr="http://www.sama.bea.sa/execution/services/RPGarnishCallBack"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RPGarnishCallBack"
+    targetNamespace="http://www.sama.bea.sa/execution/services/RPGarnishCallBack" xmlns:gs-ai="http://www.sama.bea.sa/execution/services/RPGarnish"
+    xmlns:head="http://www.sama.bea.sa/common/Header">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+             <xsd:import namespace="http://www.sama.bea.sa/execution/services/RPGarnish" schemaLocation="../services/RPGarnish.xsd" />
+            <xsd:import namespace="http://www.sama.bea.sa/common/Header" schemaLocation="../../common/Header.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="RPGarnishCallBackRq">
+        <wsdl:part element="gs-ai:RPGarnishCallBackRq" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RPGarnishCallBackRs">
+        <wsdl:part element="gs-ai:RPGarnishCallBackRs" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RqHdr">
+        <wsdl:part element="head:MsgHdrRq" name="header" />
+    </wsdl:message>
+    <wsdl:message name="RsHdr">
+        <wsdl:part element="head:MsgHdrRs" name="header" />
+    </wsdl:message>
+
+    <wsdl:portType name="RPGarnishCallBack">
+        <wsdl:operation name="RPGarnishCallBack">
+            <wsdl:input message="rpgr:RPGarnishCallBackRq" />
+            <wsdl:output message="rpgr:RPGarnishCallBackRs" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="RPGarnishCallBackSOAP" type="rpgr:RPGarnishCallBack">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="RPGarnishCallBack">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+                <soap:header message="rpgr:RqHdr" part="header" use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+                <soap:header message="rpgr:RsHdr" part="header" use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="RPGarnishCallBack">
+        <wsdl:port binding="rpgr:RPGarnishCallBackSOAP" name="RPGarnishCallBackSOAP">
+            <soap:address location="http://www.sama.bea.sa/" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

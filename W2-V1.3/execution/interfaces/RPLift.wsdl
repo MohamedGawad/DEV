@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:rplf="http://www.sama.bea.sa/execution/services/RPLift"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RPLift"
+    targetNamespace="http://www.sama.bea.sa/execution/services/RPLift" xmlns:gai="http://www.sama.bea.sa/execution/services/RPLift"
+    xmlns:head="http://www.sama.bea.sa/common/Header">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.sama.bea.sa/execution/services/RPLift" schemaLocation="../services/RPLift.xsd" />
+            <xsd:import namespace="http://www.sama.bea.sa/common/Header" schemaLocation="../../common/Header.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="RPLiftRq">
+        <wsdl:part element="gai:RPLiftRq" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RPLiftRs">
+        <wsdl:part element="gai:RPLiftRs" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RqHdr">
+        <wsdl:part element="head:MsgHdrRq" name="header" />
+    </wsdl:message>
+    <wsdl:message name="RsHdr">
+        <wsdl:part element="head:MsgHdrRs" name="header" />
+    </wsdl:message>
+
+    <wsdl:portType name="RPLift">
+        <wsdl:operation name="RPLift">
+            <wsdl:input message="rplf:RPLiftRq" />
+            <wsdl:output message="rplf:RPLiftRs" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="RPLiftSOAP" type="rplf:RPLift">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="RPLift">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+                <soap:header message="rplf:RqHdr" part="header" use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+                <soap:header message="rplf:RsHdr" part="header" use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="RPLift">
+        <wsdl:port binding="rplf:RPLiftSOAP" name="RPLiftSOAP">
+            <soap:address location="http://www.sama.bea.sa/" />
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>

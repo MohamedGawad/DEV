@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.sama.bea.sa/execution/services/RPBlock"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:base="http://www.sama.bea.sa/common/BaseLib"
+	xmlns:ex-lib="http://www.sama.bea.sa/execution/services/ExecutionLib"
+	xmlns:ai="http://www.sama.bea.sa/execution/services/RPBlock">
+	
+	<import namespace="http://www.sama.bea.sa/common/BaseLib"
+		schemaLocation="../../common/BaseLib.xsd" />
+
+	<import
+		namespace="http://www.sama.bea.sa/execution/services/ExecutionLib"
+		schemaLocation="../services/ExecutionLib.xsd" />
+
+	<element name="RPBlockRq" type="ai:T_RPBlockRq"></element>
+
+	<element name="RPBlockRs" type="ai:T_RPBlockRs"></element>
+
+	<complexType name="T_RPBlockRq">
+		<sequence>
+			<element name="Rqstr" type="base:T_Rqstr" maxOccurs="1" minOccurs="1"></element>
+			<element name="InvPrty" type="base:T_RpInvPrty" maxOccurs="1" minOccurs="1"></element>
+			<element name="ThrdPrty" type="base:T_ThrdPrty" maxOccurs="1" minOccurs="1"></element>
+			<element name="Outline" type="ex-lib:T_RPBlockOutline" maxOccurs="1" minOccurs="1"></element>
+			<element name="FinInst" type="base:T_FinInst" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="T_RPBlockRs">
+	</complexType>
+
+	<element name="RPBlockCallBackRq" type="ai:T_RPBlockCallBackRq"></element>
+
+	<element name="RPBlockCallBackRs" type="ai:T_RPBlockCallBackRs"></element>
+
+
+	<complexType name="T_RPBlockCallBackRq">
+		<sequence>
+			<element name="SmryInfo" type="ex-lib:T_RPBlockSmryInfo" maxOccurs="1" minOccurs="1"></element>
+			<element name="FIRsBlockDtls" type="ex-lib:T_FIRsBlockDtls" maxOccurs="1" minOccurs="1"></element>
+			
+		</sequence>
+	</complexType>
+
+	<complexType name="T_RPBlockCallBackRs">
+	</complexType>
+
+</schema>

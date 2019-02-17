@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:rpdd="http://www.sama.bea.sa/execution/services/RPDenyDlngCallBack"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RPDenyDlngCallBack"
+    targetNamespace="http://www.sama.bea.sa/execution/services/RPDenyDlngCallBack" xmlns:gs-ai="http://www.sama.bea.sa/execution/services/RPDenyDlng"
+    xmlns:head="http://www.sama.bea.sa/common/Header">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+             <xsd:import namespace="http://www.sama.bea.sa/execution/services/RPDenyDlng" schemaLocation="../services/RPDenyDlng.xsd" />
+            <xsd:import namespace="http://www.sama.bea.sa/common/Header" schemaLocation="../../common/Header.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="RPDenyDlngCallBackRq">
+        <wsdl:part element="gs-ai:RPDenyDlngCallBackRq" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RPDenyDlngCallBackRs">
+        <wsdl:part element="gs-ai:RPDenyDlngCallBackRs" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RqHdr">
+        <wsdl:part element="head:MsgHdrRq" name="header" />
+    </wsdl:message>
+    <wsdl:message name="RsHdr">
+        <wsdl:part element="head:MsgHdrRs" name="header" />
+    </wsdl:message>
+
+    <wsdl:portType name="RPDenyDlngCallBack">
+        <wsdl:operation name="RPDenyDlngCallBack">
+            <wsdl:input message="rpdd:RPDenyDlngCallBackRq" />
+            <wsdl:output message="rpdd:RPDenyDlngCallBackRs" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="RPDenyDlngCallBackSOAP" type="rpdd:RPDenyDlngCallBack">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="RPDenyDlngCallBack">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+                <soap:header message="rpdd:RqHdr" part="header" use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+                <soap:header message="rpdd:RsHdr" part="header" use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="RPDenyDlngCallBack">
+        <wsdl:port binding="rpdd:RPDenyDlngCallBackSOAP" name="RPDenyDlngCallBackSOAP">
+            <soap:address location="http://www.sama.bea.sa/" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.sama.bea.sa/execution/services/FIGarnish"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:base="http://www.sama.bea.sa/common/BaseLib"
+	xmlns:ex-lib="http://www.sama.bea.sa/execution/services/ExecutionLib"
+	xmlns:ai="http://www.sama.bea.sa/execution/services/FIGarnish">
+
+	<import namespace="http://www.sama.bea.sa/common/BaseLib"
+		schemaLocation="../../common/BaseLib.xsd" />
+
+	<import
+		namespace="http://www.sama.bea.sa/execution/services/ExecutionLib"
+		schemaLocation="../services/ExecutionLib.xsd" />
+
+	<element name="FIGarnishRq" type="ai:T_FIGarnishRq"></element>
+
+	<element name="FIGarnishRs" type="ai:T_FIGarnishRs"></element>
+
+	<complexType name="T_FIGarnishRq">
+		<sequence>
+			<element name="Rqstr" type="base:T_Rqstr" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="InvPrty" type="base:T_InvPrty" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="ThrdPrty" type="base:T_ThrdPrty"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			<element name="Outline" type="ex-lib:T_FIGarnishOutline"
+				maxOccurs="1" minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="T_FIGarnishRs"></complexType>
+
+	<element name="FIGarnishCallBackRq"
+		type="ai:T_FIGarnishCallBackRq">
+	</element>
+
+	<element name="FIGarnishCallBackRs"
+		type="ai:T_FIGarnishCallBackRs">
+	</element>
+
+
+	<complexType name="T_FIGarnishCallBackRq">
+		<sequence>
+			<element name="CustInfo" type="base:T_CustInfo"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			<element minOccurs="0" name="SmryInfo"
+				type="ex-lib:T_FIGarnishSmryInfo">
+			</element>
+			<element name="GarnishDtlsInfo" type="ex-lib:T_GarnishDtlsInfo"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			
+		</sequence>
+	</complexType>
+
+	<complexType name="T_FIGarnishCallBackRs"></complexType>
+
+</schema>
