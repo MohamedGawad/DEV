@@ -19,7 +19,7 @@
 	<complexType name="T_RPLiftRq">
 		<sequence>
 			<element name="Rqstr" type="base:T_Rqstr" maxOccurs="1" minOccurs="1"></element>
-			<element name="Outline" type="ex-lib:T_LiftOutline" maxOccurs="1" minOccurs="1"></element>
+			<element name="Outline" type="ex-lib:T_RPLiftOutline" maxOccurs="1" minOccurs="1"></element>
 		
 		</sequence>
 	</complexType>

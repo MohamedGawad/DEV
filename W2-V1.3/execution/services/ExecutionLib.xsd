@@ -272,11 +272,11 @@
 	
 		<sequence>
 			<element name="JntAcctsList" type="base:T_JntAcctsList"
-				minOccurs="0" maxOccurs="unbounded">
+				minOccurs="0" maxOccurs="1">
 			</element>
 			
 			<element name="JntDepotsList" type="base:T_JntDepotsList"
-				minOccurs="0" maxOccurs="unbounded">
+				minOccurs="0" maxOccurs="1">
 			</element>
 			
 			<element name="ShrsList" type="base:T_ShrsList"
@@ -291,11 +291,11 @@
 	
 		<sequence>
 			<element name="AcctsList" type="exe-lib:T_ExeAcctsList"
-				minOccurs="0" maxOccurs="unbounded">
+				minOccurs="0" maxOccurs="1">
 			</element>
 			
 			<element name="DepotsList" type="exe-lib:T_ExeDepotsList"
-				minOccurs="0" maxOccurs="unbounded">
+				minOccurs="0" maxOccurs="1">
 			</element>
 			
 			<element name="SafInfo" type="exe-lib:T_ExeSafInfo"
@@ -311,7 +311,7 @@
 	
 		<sequence>
 			<element name="AccInfo" type="exe-lib:T_ExeAccInfo"
-				minOccurs="1" maxOccurs="1">
+				minOccurs="1" maxOccurs="unbounded">
 			</element>
 		</sequence>
 		
@@ -321,7 +321,7 @@
 	
 		<sequence>
 			<element name="DepotInfo" type="exe-lib:T_ExeDepotInfo"
-				minOccurs="1" maxOccurs="1">
+				minOccurs="1" maxOccurs="unbounded">
 			</element>
 		</sequence>
 		
@@ -688,8 +688,22 @@
 			</simpleType>
 			
 			</element>
-			<element name="Depots" type="base:T_Flag" maxOccurs="1" minOccurs="0"></element>
-			<element name="Safs" type="base:T_Flag" maxOccurs="1" minOccurs="0"></element>
+			<element name="Depots" maxOccurs="1" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+					<length value="1" />
+					<pattern value="[y]{1}" />
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="Safs" maxOccurs="1" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+					<length value="1" />
+					<pattern value="[y]{1}" />
+					</restriction>
+				</simpleType>
+			</element>
 
 		</sequence>
 	</complexType>
@@ -767,7 +781,7 @@
 	<complexType name="T_ExeSafsSmryInfo">
 		<sequence>
 			<element name="hasSafs" type="base:T_Flag" maxOccurs="1" minOccurs="1"></element>
-			<element name="ExeDtTm" type="base:T_MsgDtTm" maxOccurs="1" minOccurs="1"></element>
+			
 
 		</sequence>
 	</complexType>
@@ -775,10 +789,22 @@
 	<complexType name="T_GarnishDtlsInfo">
 	
 		<sequence>
-			<element name="DtlsInfo" type="exe-lib:T_ExeDtlsInfo" maxOccurs="1" minOccurs="0"></element>
-			<element name="DtlsInfoNF" type="exe-lib:T_ExeDtlsInfoNF" minOccurs="0" maxOccurs="1"></element>
+			
+			<element name="GarnishExeDtlsInfo" type="exe-lib:T_GarnishExeDtlsInfo" minOccurs="0" maxOccurs="1"></element>
 			<element name="InqDtlsInfo" type="exe-lib:T_InqDtlsInfo" minOccurs="0" maxOccurs="1"></element>
 		</sequence>
+		
+		
+	</complexType>
+	
+	
+	<complexType name="T_GarnishExeDtlsInfo">
+	
+		<choice>
+			
+			<element name="DtlsInfo" type="exe-lib:T_ExeDtlsInfo" maxOccurs="1" minOccurs="0"></element>
+			<element name="DtlsInfoNF" type="exe-lib:T_ExeDtlsInfoNF" minOccurs="0" maxOccurs="1"></element>
+		</choice>
 		
 		
 	</complexType>
@@ -788,11 +814,11 @@
 	
 		<sequence>
 			<element name="AcctsList" type="exe-lib:T_ExeAcctsListNF"
-				minOccurs="0" maxOccurs="unbounded">
+				minOccurs="0" maxOccurs="1">
 			</element>
 			
 			<element name="DepotsList" type="exe-lib:T_ExeDepotsListNF"
-				minOccurs="0" maxOccurs="unbounded">
+				minOccurs="0" maxOccurs="1">
 			</element>
 			
 			<element name="SafInfo" type="exe-lib:T_ExeSafInfo"
@@ -807,7 +833,7 @@
 	
 		<sequence>
 			<element name="AccInfo" type="exe-lib:T_ExeAccInfoNF"
-				minOccurs="1" maxOccurs="1">
+				minOccurs="1" maxOccurs="unbounded">
 			</element>
 		</sequence>
 		
@@ -817,7 +843,7 @@
 	
 		<sequence>
 			<element name="DepotInfo" type="exe-lib:T_ExeDepotInfoNF"
-				minOccurs="1" maxOccurs="1">
+				minOccurs="1" maxOccurs="unbounded">
 			</element>
 		</sequence>
 		
@@ -917,7 +943,7 @@
 	</complexType>
 		
 		
-	<complexType name="T_LiftOutline">
+	<complexType name="T_RPLiftOutline">
 		<sequence>
 		
 		<element name="DcsnInfo" type="exe-lib:T_LiftDcsnInfo" maxOccurs="1" minOccurs="1"></element>
@@ -927,7 +953,7 @@
 				maxOccurs="1">
 			</element>
 			
-			<element name="ExePlan" type="exe-lib:T_LiftExePlan" minOccurs="1"
+			<element name="ExePlan" type="exe-lib:T_RPLiftExePlan" minOccurs="1"
 				maxOccurs="1">
 			</element>
 		<element name="BlockLiftCndtn" type="exe-lib:T_BlockLiftCndtn" maxOccurs="1" minOccurs="0"></element>
@@ -936,9 +962,28 @@
 	</complexType>	
 		
 		
-	<complexType name="T_LiftExePlan">
+		<complexType name="T_FILiftOutline">
+		<sequence>
+		
+		<element name="DcsnInfo" type="exe-lib:T_LiftDcsnInfo" maxOccurs="1" minOccurs="1"></element>
+			
+			
+			<element name="SrvcRefInfo" type="exe-lib:T_SrvcRefInfo" minOccurs="1"
+				maxOccurs="1">
+			</element>
+			
+			<element name="ExePlan" type="exe-lib:T_FILiftExePlan" minOccurs="1"
+				maxOccurs="1">
+			</element>
+		<element name="BlockLiftCndtn" type="exe-lib:T_BlockLiftCndtn" maxOccurs="1" minOccurs="0"></element>
+
+		</sequence>
+	</complexType>	
+		
+		
+	<complexType name="T_RPLiftExePlan">
 		<choice>
-			<element name="Full" type="exe-lib:T_LiftFull" minOccurs="1"
+			<element name="Full" type="exe-lib:T_RPLiftFull" minOccurs="1"
 				maxOccurs="1">
 			</element>
 		
@@ -949,7 +994,31 @@
 	</complexType>
 		
 		
-	<complexType name="T_LiftFull">
+	<complexType name="T_FILiftExePlan">
+		<choice>
+			<element name="Full" type="exe-lib:T_FILiftFull" minOccurs="1"
+				maxOccurs="1">
+			</element>
+		
+			<element name="Part" type="exe-lib:T_LiftPart" minOccurs="1"
+				maxOccurs="1">
+			</element>
+		</choice>
+	</complexType>	
+	
+		<complexType name="T_FILiftFull">
+		<choice>
+			<element name="InvPrty" type="base:T_InvPrty" minOccurs="1"
+				maxOccurs="1">
+			</element>
+		
+			<element name="AccId" type="base:T_AccId" minOccurs="1"
+				maxOccurs="1">
+			</element>
+		</choice>
+	</complexType>
+		
+	<complexType name="T_RPLiftFull">
 		<choice>
 			<element name="InvPrty" type="base:T_RpInvPrty" minOccurs="1"
 				maxOccurs="1">
