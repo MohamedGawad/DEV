@@ -1,0 +1,224 @@
+create or replace PROCEDURE validaterplift (
+    input_val    IN XMLTYPE,
+    status_val   OUT VARCHAR2
+) AS
+
+    rrn            VARCHAR2(100 CHAR);
+    pid            VARCHAR2(100 CHAR);
+    status         VARCHAR2(100 CHAR);
+    srvccode       VARCHAR2(100 CHAR);
+    amt            FLOAT;
+    execsumid      NUMBER;
+    runtotcount    NUMBER;
+    prevlftcount   NUMBER;
+    agcysrvcid     NUMBER;
+    idno           VARCHAR2(100 CHAR);
+    idtype         VARCHAR2(100 CHAR);
+    natcd          VARCHAR2(100 CHAR);
+BEGIN
+    status_val := 'VALID';
+    dbms_output.put_line('VALIDATERPLIFT Starts');
+
+
+
+/*
+
+<ValidatePrevRPLift>
+
+	<pid> </pid>
+
+	<srn> </srn>
+
+	<rrn> </rrn>
+
+	<status> </status>
+
+  	<invId> </invId>
+
+
+
+	<idType> </idType>
+
+
+
+	<nalty> </nalty>
+
+
+
+</ValidatePrevRPLift>
+
+*/
+    FOR r IN (
+        SELECT
+            extractvalue(value(p),'/ValidatePrevRPLift/pid/text()') AS pid,
+            extractvalue(value(p),'/ValidatePrevRPLift/srn/text()') AS srn,
+            extractvalue(value(p),'/ValidatePrevRPLift/rrn/text()') AS rrn,
+            extractvalue(value(p),'/ValidatePrevRPLift/status/text()') AS status,
+            extractvalue(value(p),'/ValidatePrevRPLift/amt/text()') AS amt,
+            extractvalue(value(p),'/ValidatePrevRPLift/invId/text()') AS invid,
+            extractvalue(value(p),'/ValidatePrevRPLift/idType/text()') AS idtype,
+            extractvalue(value(p),'/ValidatePrevRPLift/nalty/text()') AS nalty
+        FROM
+            TABLE ( xmlsequence(extract(input_val,'/ValidatePrevRPLift') ) ) p
+    ) LOOP
+        BEGIN
+            SELECT
+                agcy_srvc_reqst_id,
+                rrn,
+                status,
+                reqstr_cd,
+                srvc_type_cd,
+                CAST(available_amt AS FLOAT) avail_amt,
+                exec_summary_id
+            INTO
+                agcysrvcid,
+                rrn,
+                status,
+                pid,
+                srvccode,
+                amt,
+                execsumid
+            FROM
+                exec_summary
+            WHERE
+                exec_summary.srvc_reqst_srn = r.srn;
+
+            dbms_output.put_line('amt = ' || r.amt);
+            IF
+                ( pid != r.pid )
+            THEN
+                status_val := 'INVALID_Requester_CD';
+            ELSIF ( status = 'LFT' ) THEN
+                status_val := 'INVALID_Lift_Status';
+            ELSIF ( r.amt IS NOT NULL ) THEN
+                dbms_output.put_line('amt cond');
+                IF
+                    ( r.amt > amt )
+                THEN
+                    status_val := 'INVALID_AMOUNT';
+                END IF;
+            ELSIF ( r.invid IS NOT NULL ) THEN
+                dbms_output.put_line('inv Party cond');
+                SELECT
+                    id_no,
+                    id_type_cd,
+                    nat_cd
+                INTO
+                    idno,
+                    idtype,
+                    natcd
+                FROM
+                    involved_party
+                WHERE
+                    involved_party.agcy_srvc_reqst_id = agcysrvcid;
+
+                IF
+                    ( r.invid != idno )
+                THEN
+                    status_val := 'INVALID_INV_ID';
+                ELSIF ( r.idtype != idtype ) THEN
+                    status_val := 'INVALID_INV_IDTYPE';
+                ELSIF ( r.nalty IS NOT NULL ) THEN
+                    IF
+                        ( r.nalty != natcd )
+                    THEN
+                        status_val := 'INVALID_Nat';
+                    END IF;
+                END IF;
+
+          
+            END IF;
+
+            IF
+                ( status_val = 'VALID' )
+            THEN
+             
+                SELECT
+                    COUNT(*)
+                INTO prevlftcount
+                FROM
+                    agcy_srvc_reqst
+                WHERE
+                    agcy_srvc_reqst_id IN (
+                        SELECT
+                            agcy_srvc_reqst_id
+                        FROM
+                            lift_exec_reqst
+                        WHERE
+                            prev_srn = r.srn
+                    )
+                    AND agcy_srvc_reqst.curr_reqst_status_cd not in  ('CLOS','NOTDELIV','COM','COMREJ','COMDE');
+
+                dbms_output.put_line('prevLftCount   ' || prevlftcount);
+                IF
+                    ( prevlftcount > 0 )
+                THEN
+                    status_val := 'PREV_SRN_UNDER_PROCESS';
+                    else
+                     dbms_output.put_line('Valid case return select ' || execsumid);
+                status_val := 'VALID,'
+                              || srvccode
+                              || ','
+                              || execsumid;
+                END IF;
+               
+
+/*SELECT count(*) into runTotCount
+
+FROM EXEC_RUNNING_TOTALS exTot
+
+WHERE exTot.EXEC_SUMMARY_ID = execSumID;
+
+
+
+if (runTotCount=1)
+
+then
+
+SELECT XMLELEMENT("exec_running_totals",XMLELEMENT("exec_running_totals_id",exTot.EXEC_RUNNING_TOTALS_ID),
+
+XMLELEMENT("exec_summary_id",exTot.EXEC_SUMMARY_ID),
+
+XMLELEMENT("fin_inst_cd",exTot.FIN_INST_CD),
+
+XMLELEMENT("acc_num",exTot.ACC_NUM),
+
+XMLELEMENT("acc_currency",exTot.ACC_CURRENCY),
+
+XMLELEMENT("available_amt",exTot.AVAILABLE_AMT),
+
+XMLELEMENT("available_amt",exTot.AVAILABLE_AMT),
+
+XMLELEMENT("srvcCode",srvcCode)) .GETCLOBVAL()
+
+into STATUS_VAL
+
+FROM EXEC_RUNNING_TOTALS exTot
+
+WHERE exTot.EXEC_SUMMARY_ID = execSumID;
+
+elsif(runTotCount>1)
+
+then
+
+STATUS_VAL:=srvcCode;
+
+end if;*/
+            END IF;
+
+            dbms_output.put_line('STATUS_VAL: ' || status_val);
+        END;
+    END LOOP;
+
+    IF
+        ( status_val = 'VALID' )
+    THEN
+        dbms_output.put_line('Valid Record Deleted successfully');
+    END IF;
+    dbms_output.put_line('VALIDATERPLIFT Ends');
+EXCEPTION
+    WHEN no_data_found THEN
+        status_val := 'INVALID_SRN';
+    WHEN OTHERS THEN
+        raise_application_error(-20322,'UNKNOWN ERROR>>' || sqlerrm);
+END validaterplift;

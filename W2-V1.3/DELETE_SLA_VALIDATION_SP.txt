@@ -3,20 +3,60 @@ create or replace PROCEDURE DELETE_SLA_VALIDATION_SP
   AGCY_PK IN NUMBER 
 , SRN_V IN VARCHAR2 
 , SRVC_CODE IN VARCHAR2 
+, SLA_ENTITY_ID_V IN VARCHAR2
+
 ) AS 
 
 
 BEGIN
 
 
-Delete from ACTV_SLA_INSTANCE where SLA_INSTANCE_REF_ID = AGCY_PK and SLA_INSTANCE_REF_TYPE like 'FI%';
+DBMS_OUTPUT.PUT_LINE('SLA_ENTITY_ID_V >>'||SLA_ENTITY_ID_V);
+
+IF SLA_ENTITY_ID_V is not null then
+    Delete from ACTV_SLA_INSTANCE where SLA_INSTANCE_REF_ID = AGCY_PK and SLA_ENTITY_ID = SLA_ENTITY_ID_V;
+    else
+    Delete from ACTV_SLA_INSTANCE where SLA_INSTANCE_REF_ID = AGCY_PK and SLA_INSTANCE_REF_TYPE like 'FI%';
+    end if;
 
 IF (SRVC_CODE = '010') THEN
 
-Delete from FI_BLOCK_SUMMARY_VALIDATION where SRN = SRN_V;
-
+    IF SLA_ENTITY_ID_V is not null then
+    Delete from FI_BLOCK_SUMMARY_VALIDATION where SRN = SRN_V and FI_CODE = SLA_ENTITY_ID_V ;
+    else
+    Delete from FI_BLOCK_SUMMARY_VALIDATION where SRN = SRN_V;
+    END IF;
 ELSIF (SRVC_CODE = '011') THEN
-Delete from FI_GARNISH_SUMMARY_VALIDATION where SRN = SRN_V;
+
+    IF SLA_ENTITY_ID_V is not null then
+    Delete from FI_GARNISH_SUMMARY_VALIDATION where SRN = SRN_V and FI_CODE = SLA_ENTITY_ID_V ;
+    else
+    Delete from FI_GARNISH_SUMMARY_VALIDATION where SRN = SRN_V;
+    END IF;
+
+ELSIF (SRVC_CODE = '007') THEN
+
+    IF SLA_ENTITY_ID_V is not null then
+    Delete from FI_BAN_SUMMARY_VALIDATION where SRN = SRN_V and FI_CODE = SLA_ENTITY_ID_V ;
+    else
+    Delete from FI_BAN_SUMMARY_VALIDATION where SRN = SRN_V;
+    END IF;
+
+ELSIF (SRVC_CODE = '008') THEN
+
+    IF SLA_ENTITY_ID_V is not null then
+    Delete from FI_DENY_SUMMARY_VALIDATION where SRN = SRN_V and FI_CODE = SLA_ENTITY_ID_V ;
+    else
+    Delete from FI_DENY_SUMMARY_VALIDATION where SRN = SRN_V;
+    END IF;
+
+ELSIF (SRVC_CODE = '009') THEN
+
+    IF SLA_ENTITY_ID_V is not null then
+    Delete from FI_LIFT_SUMMARY_VALIDATION where SRN = SRN_V and FI_CODE = SLA_ENTITY_ID_V ;
+    else
+    Delete from FI_LIFT_SUMMARY_VALIDATION where SRN = SRN_V;
+    END IF;
 
 END IF ;
 EXCEPTION

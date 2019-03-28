@@ -1,0 +1,193 @@
+create or replace PROCEDURE INSERT_FI_LIFT_SUM_VALID_SP (INPUT_VAL IN XMLTYPE , FI_LIFT_SUM_VALID_ID_OUT OUT VARCHAR2)AS 
+
+--INPUT_STR VARCHAR2(1000);
+
+--INPUT_CUSTOM_VAL XMLTYPE;
+
+BEGIN
+
+
+
+/*
+
+<Fi_Lift_Summary_Validation>
+
+	<msg_uid> </msg_uid>
+
+	<msg_mode> </msg_mode>
+
+	<fi_code> </fi_code>
+
+	<trans_date> </trans_date>
+
+	<is_involved_party> </is_involved_party>
+
+	<is_acc_id> </is_acc_id>
+
+	<involved_party_id> </involved_party_id>
+
+	<involved_party_id_type> </involved_party_id_type>
+
+	<nat_cd> </nat_cd>
+
+	<amt_val> </amt_val>
+
+	<amt_cur> </amt_cur>
+
+</Fi_Lift_Summary_Validation>
+
+*/
+
+
+
+-- INPUT_STR := INPUT_VAL.getstringval();
+
+-- INPUT_STR :=  concat('<parent>',INPUT_STR);
+
+-- INPUT_STR := concat(INPUT_STR,'</parent>');
+
+-- INPUT_CUSTOM_VAL := new XMLTYPE(INPUT_STR);
+
+
+
+
+
+
+
+
+
+ FOR r IN
+
+      (SELECT ExtractValue(Value(p),'/fi_Lift_Summary_Validation/msg_uid/text()') AS  MSG_UID,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/msg_mode/text()') As MSG_MODE,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/fi_code/text()') As FI_CODE,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/trans_date/text()') As TRANS_DATE,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/is_involved_party/text()') As IS_INVOLVED_PARTY,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/is_acc_id/text()') As IS_ACC_ID,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/involved_party_id/text()') As INVOLVED_PARTY_ID,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/involved_party_id_type/text()') As INVOLVED_PARTY_ID_TYPE,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/nat_cd/text()') As NAT_CODE,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/amt_val/text()').getnumberval() As AMT_VAL,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/amt_cur/text()') As AMT_CUR,
+
+      Extract(Value(p),'/fi_Lift_Summary_Validation/acc_num/text()') As ACC_NUM,
+
+       Extract(Value(p),'/fi_Lift_Summary_Validation/is_iban/text()') As IS_IBAN,
+       Extract(Value(p),'/fi_Lift_Summary_Validation/busCode/text()') As BUSCODE,
+
+       Extract(Value(p),'/fi_Lift_Summary_Validation/INVOLVED_PARTY_TYPE/text()') As invPartyType
+
+
+
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/InsertFISummaryValidation/fi_Lift_Summary_Validation'))) p)
+
+
+
+   LOOP
+
+   begin
+
+    INSERT INTO FI_LIFT_SUMMARY_VALIDATION 
+
+    (
+
+      MSG_UID,
+
+      MSG_MODE,
+
+      FI_CODE,
+
+      TRANS_DATE,
+
+      IS_INVOLVED_PARTY,
+
+      IS_ACC_ID,
+
+      INVOLVED_PARTY_ID,
+
+      INVOLVED_PARTY_ID_TYPE,
+
+      NAT_CD,
+
+      AMT_VAL,
+
+      AMT_CUR,
+
+      ACC_NUM,
+
+      IS_IBAN,
+      
+      BUS_SRVC_CD,
+      INVOLVED_PARTY_TYPE,
+      SRN
+
+    )
+
+    VALUES
+
+    (
+
+      r.MSG_UID,
+
+      r.MSG_MODE,
+
+      r.FI_CODE,
+
+      to_date(r.TRANS_DATE,'YYYY-MM-DD HH24:MI:SS'),
+
+      r.IS_INVOLVED_PARTY,
+
+      r.IS_ACC_ID,
+
+      r.INVOLVED_PARTY_ID,
+
+      r.INVOLVED_PARTY_ID_TYPE,
+
+      r.NAT_CODE,
+
+      r.AMT_VAL,
+
+      r.AMT_CUR,
+
+      r.ACC_NUM,
+
+      r.IS_IBAN,
+      r.BUSCODE,
+      r.invPartyType,
+      SUBSTR(r.MSG_UID,0, INSTR(r.MSG_UID,'-')-1)
+
+    )RETURNING FI_LIFT_SUMMARY_VALIDATION_ID INTO FI_LIFT_SUM_VALID_ID_OUT;
+
+
+
+  end;
+
+  END LOOP;
+
+
+
+
+
+  EXCEPTION
+
+  WHEN OTHERs THEN
+
+      Raise_application_error(-20322, 'UNKNOWN ERROR>>'|| SQLERRM); 
+
+
+
+
+
+
+
+END INSERT_FI_LIFT_SUM_VALID_SP;

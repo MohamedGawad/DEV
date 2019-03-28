@@ -1,0 +1,185 @@
+create or replace PROCEDURE INSERT_LIFT_RESP_SP (INPUT_VAL IN XMLTYPE) AS 
+exetr_srvc_task_id_val NUMBER;
+prd_id NUMBER;
+xml_PRD_USR_LST XMLTYPE ;
+BEGIN
+
+DBMS_OUTPUT.PUT_LINE('INSERT_LIFT_RESP_SP starts');
+
+/*
+<FIRespDetailsInput>
+	<lift_Exec_Resp>
+		<exetr_srvc_task_id> </exetr_srvc_task_id>
+		<cust_name> </cust_name>
+		<cust_id> </cust_id>
+		<cust_id_type> </cust_id_type>
+		<cust_nat_cd> </cust_nat_cd>
+		<exe_date_time> </exe_date_time>
+		<total_trans_amt> </total_trans_amt>
+		<total_block_amt> </total_block_amt>
+		<pending_amt> </pending_amt>
+	</lift_Exec_Resp>
+</FIRespDetailsInput>  
+*/
+
+
+FOR r IN
+      (SELECT ExtractValue(Value(p),'/lift_Exec_Resp/cust_name/text()') AS  CUST_NAME,
+      Extract(Value(p),'/lift_Exec_Resp/exetr_srvc_task_id/text()').getnumberval() As EXEC_SRVC_TASK_ID,
+      Extract(Value(p),'/lift_Exec_Resp/cust_id/text()') As CUST_ID,
+      Extract(Value(p),'/lift_Exec_Resp/cust_id_type/text()') As CUST_ID_TYPE,
+      Extract(Value(p),'/lift_Exec_Resp/cust_nat_cd/text()') As CUST_NAT_CD,
+      Extract(Value(p),'/lift_Exec_Resp/exe_date_time/text()') As EXEC_DATE_TIME,
+      Extract(Value(p),'/lift_Exec_Resp/total_trans_amt/text()').getnumberval() As TOTAL_TRANS_AMT,
+      Extract(Value(p),'/lift_Exec_Resp/total_block_amt/text()').getnumberval() As TOTAL_BLOCK_AMT,
+      Extract(Value(p),'/lift_Exec_Resp/pending_amt/text()').getnumberval() As PENDING_AMT
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/lift_Exec_Resp'))) p)
+
+      LOOP
+   begin
+    INSERT INTO LIFT_EXEC_RESP 
+    (
+      EXETR_SRVC_TASK_ID, 
+      CUST_NAME, 
+      CUST_ID, 
+      CUST_ID_TYPE, 
+      CUST_NAT_CD, 
+      EXE_DATE_TIME,
+      TOTAL_TRANS_AMT,
+      TOTAL_BLOCK_AMT,
+      PENDING_AMT
+    )
+    VALUES
+    (
+      r.EXEC_SRVC_TASK_ID,
+      r.CUST_NAME,
+      r.CUST_ID,
+      r.CUST_ID_TYPE,
+      r.CUST_NAT_CD,
+      to_date(r.EXEC_DATE_TIME,'YYYY-MM-DD HH24:MI:SS'),
+      r.TOTAL_TRANS_AMT,
+      r.TOTAL_BLOCK_AMT,
+      r.PENDING_AMT
+    )RETURNING EXETR_SRVC_TASK_ID INTO exetr_srvc_task_id_val;
+
+  end;
+  END LOOP;
+------------------------------------------------------------------------------------------------------------
+FOR o IN
+
+      (SELECT ExtractValue(Value(p),'/trans_Acc_Info/iban/text()') AS  ACC_INFO_IBAN,
+      Extract(Value(p),'/trans_Acc_Info/exetr_srvc_task_id/text()').getnumberval() As ACC_INFO_EXETR_SRVC_TASK_ID,
+      Extract(Value(p),'/trans_Acc_Info/acc_num/text()') As ACC_INFO_ACC_NUM,
+      Extract(Value(p),'/trans_Acc_Info/inst/text()') As ACC_INFO_INST,
+      Extract(Value(p),'/trans_Acc_Info/jnt_acc/text()') As ACC_INFO_JNT_ACC,
+      Extract(Value(p),'/trans_Acc_Info/acc_cur/text()') As ACC_INFO_ACC_CUR,
+      Extract(Value(p),'/trans_Acc_Info/src_amt/text()').getnumberval() As ACC_INFO_SRC_AMT,
+      Extract(Value(p),'/trans_Acc_Info/exec_amt/text()').getnumberval() As ACC_INFO_EXEC_AMT,
+      Extract(Value(p),'/trans_Acc_Info/fx_rate/text()').getnumberval() As ACC_INFO_FX_RATE,
+      Extract(Value(p),'/trans_Acc_Info/exec_date/text()') As ACC_INFO_EXEC_DATE,
+      Extract(Value(p),'/trans_Acc_Info/transfer_ref_no/text()') As ACC_INFO_TRANSFER_REF_NO,      
+      Extract(Value(p),'/trans_Acc_Info/prd_Usr_Lst').getClobVal() As PRD_USR_LST,
+      Extract(Value(p),'/trans_Acc_Info/transfer_status/text()') As ACC_INFO_TRANSFER_STATUS
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/trans_Acc_Info'))) p
+      WHERE EXISTSNODE(INPUT_VAL,'/FIRespDetailsInput/trans_Acc_Info') = 1
+      )  
+      LOOP
+
+   begin
+    INSERT INTO EXEC_ACC_INFO
+    (
+      EXETR_SRVC_TASK_ID,
+      ACC_NUM,
+      IBAN,
+      INST,
+      JNT_ACC,
+      ACC_CUR,
+      SRC_AMT,
+      EXEC_AMT,
+      FX_RATE,
+      EXEC_DATE,
+      TRANSFER_REF_NO,
+      TRANSFER_STATUS
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+      o.ACC_INFO_ACC_NUM,
+      o.ACC_INFO_IBAN,
+      o.ACC_INFO_INST,
+      o.ACC_INFO_JNT_ACC,
+      o.ACC_INFO_ACC_CUR,
+      o.ACC_INFO_SRC_AMT,
+      o.ACC_INFO_EXEC_AMT,
+      o.ACC_INFO_FX_RATE,
+--      to_date(o.ACC_INFO_EXEC_DATE, 'YYYY-MM-DD HH24:MI:SS'),
+    sysdate,
+      o.ACC_INFO_TRANSFER_REF_NO,
+      o.ACC_INFO_TRANSFER_STATUS 
+    )RETURNING EXEC_ACC_INFO_ID INTO prd_id;
+
+
+o.PRD_USR_LST := CONCAT('<prd_lst>', o.PRD_USR_LST);
+o.PRD_USR_LST := CONCAT(o.PRD_USR_LST,'</prd_lst>');
+xml_PRD_USR_LST := new XMLTYPE(o.PRD_USR_LST);
+
+
+  end;
+
+  FOR t IN
+
+      (SELECT ExtractValue(Value(V),'/prd_Usr_Lst/prd_user_id/text()') AS  PRD_USR_LST_PRD_USR_ID,
+      Extract(Value(V),'/prd_Usr_Lst/prd_user_id_type/text()') As PRD_USR_LST_PRD_USR_ID_TYPE,
+      Extract(Value(V),'/prd_Usr_Lst/prd_user_type/text()') As PRD_USR_LST_PRD_USR_TYPE,
+      Extract(Value(V),'/prd_Usr_Lst/prd_user_name/text()') As PRD_USR_LST_PRD_USR_NAME
+      FROM TABLE(XMLSequence(Extract(xml_PRD_USR_LST,'/prd_lst/prd_Usr_Lst'))) V
+      WHERE EXISTSNODE(xml_PRD_USR_LST,'/prd_lst/prd_Usr_Lst/prd_user_id') = 1
+      )
+
+      LOOP 
+
+   begin
+
+    INSERT INTO PRD_USR_LST 
+    (
+      PRD_ID,
+      PRD_TYPE,
+      PRD_USER_ID,
+      PRD_USER_ID_TYPE,
+      PRD_USER_TYPE,
+      PRD_USER_NAME      
+    )
+    VALUES
+    (
+      prd_id,
+      '009',
+      t.PRD_USR_LST_PRD_USR_ID,
+      t.PRD_USR_LST_PRD_USR_ID,
+      t.PRD_USR_LST_PRD_USR_TYPE,
+      t.PRD_USR_LST_PRD_USR_NAME  
+    );   
+  end; 
+  END LOOP;
+
+  END LOOP;
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------
+DBMS_OUTPUT.PUT_LINE('INSERT_LIFT_RESP_SP Ends'); 
+
+  EXCEPTION
+  WHEN OTHERs THEN
+      Raise_application_error(-20322, 'UNKNOWN ERROR>>'|| SQLERRM); 
+
+
+
+END INSERT_LIFT_RESP_SP;

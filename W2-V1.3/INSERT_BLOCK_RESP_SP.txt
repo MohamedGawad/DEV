@@ -1,0 +1,478 @@
+create or replace PROCEDURE INSERT_BLOCK_RESP_SP (INPUT_VAL IN XMLTYPE) 
+AS
+exetr_srvc_task_id_val NUMBER;
+prd_id NUMBER;
+xml_PRD_USR_LST XMLTYPE ;
+BEGIN
+
+/*
+<?xml version="1.0" encoding="UTF-8"?>
+<FIRespDetailsInput xmlns:ns0="http://BEA_Solution_Block_Module/ProcessLib/DispatchFIInput" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:FIRespDetailsInput">
+  <block_Exec_Resp>
+    <exetr_srvc_task_id>1273</exetr_srvc_task_id>
+    <cust_name>NAME</cust_name>
+    <cust_id>12345</cust_id>
+    <cust_id_type>RID</cust_id_type>
+    <cust_nat_cd>EGY</cust_nat_cd>
+    <total_amt>1000</total_amt>
+    <sar_total_amt>1000</sar_total_amt>
+    <rq_total_amt>1200</rq_total_amt>
+    <has_acc_flag>y</has_acc_flag>
+    <has_depost_flag>y</has_depost_flag>
+    <has_safs_flag>y</has_safs_flag>
+    <has_jnt_acc_flag>y</has_jnt_acc_flag>
+    <has_jnt_depost_flag>y</has_jnt_depost_flag>
+    <safs_exe_date_time>2019-12-12 11:00:00</safs_exe_date_time>
+  </block_Exec_Resp>
+  <exec_Acc_Info>
+    <acc_num>123</acc_num>
+    <iban>IBAN1234567890</iban>
+    <inst>1</inst>
+    <jnt_acc>1</jnt_acc>
+    <acc_cur>1</acc_cur>
+    <src_amt>0</src_amt>
+    <exec_amt>0</exec_amt>
+    <fx_rate>0</fx_rate>
+    <exec_date>2019-12-12 11:00:00</exec_date>
+    <transfer_ref_no>1</transfer_ref_no>
+    <transfer_status>1</transfer_status>
+  </exec_Acc_Info>
+  <exec_Depost_Info>
+    <exetr_srvc_task_id>1273</exetr_srvc_task_id>
+    <depost_num>1</depost_num>
+    <depost_cur>SAR</depost_cur>
+    <depost_amt>1000</depost_amt>
+    <exec_date>2019-12-12 11:00:00</exec_date>
+  </exec_Depost_Info>
+  <exec_Safs_Info>
+    <exetr_srvc_task_id>1273</exetr_srvc_task_id>
+    <exec_date>2019-12-12 11:00:00</exec_date>
+  </exec_Safs_Info>
+  <prd_Jnt_Accts>
+    <prd_id>1</prd_id>
+    <prd_type>1</prd_type>
+    <acc_num>1</acc_num>
+    <iban>IBAN1234567890</iban>
+  </prd_Jnt_Accts>
+  <prd_Shrs>
+    <prd_id>1</prd_id>
+    <prd_type>1</prd_type>
+    <comp_name>n</comp_name>
+  </prd_Shrs>
+  <prd_Jnt_Depost>
+    <prd_id>1</prd_id>
+    <prd_type>1</prd_type>
+    <depost_num>1</depost_num>
+  </prd_Jnt_Depost>
+</FIRespDetailsInput>
+*/
+
+--============================== BLOCK_EXEC_RESP starts ==================================================================
+/*  
+<block_Exec_Resp>
+    <block_exec_resp_id>0</block_exec_resp_id>
+    <exetr_srvc_task_id>0</exetr_srvc_task_id>
+    <cust_name/>
+    <cust_id/>
+    <cust_id_type/>
+    <cust_nat_cd/>
+    <total_amt>0</total_amt>
+    <sar_total_amt>0</sar_total_amt> 
+    <rq_total_amt/> 
+    <has_acc_flag/> 
+    <has_depost_flag/> 
+    <has_safs_flag/> 
+    <has_jnt_acc_flag/> 
+    <has_jnt_depost_flag/> 
+    <safs_exe_date_time/> 
+  </block_Exec_Resp>
+*/
+FOR r IN
+      (SELECT ExtractValue(Value(p),'/block_Exec_Resp/cust_name/text()') AS  BLOCK_CUST_NAME,
+      Extract(Value(p),'/block_Exec_Resp/exetr_srvc_task_id/text()').getnumberval() As BLOCK_EXEC_SRVC_TASK_ID,
+      Extract(Value(p),'/block_Exec_Resp/cust_id/text()') As BLOCK_CUST_ID,
+      Extract(Value(p),'/block_Exec_Resp/cust_id_type/text()') As BLOCK_CUST_ID_TYPE,
+      Extract(Value(p),'/block_Exec_Resp/cust_nat_cd/text()') As BLOCK_CUST_NAT_CD,
+      Extract(Value(p),'/block_Exec_Resp/total_amt/text()').getnumberval() As BLOCK_TOTAL_AMT,
+      Extract(Value(p),'/block_Exec_Resp/sar_total_amt/text()').getnumberval() As SAR_TOTAL_AMT,
+      Extract(Value(p),'/block_Exec_Resp/rq_total_amt/text()').getnumberval() As RQ_TOTAL_AMT,
+      Extract(Value(p),'/block_Exec_Resp/has_acc_flag/text()') As HAS_ACC_FLAG,
+      Extract(Value(p),'/block_Exec_Resp/has_depost_flag/text()') As HAS_DEPOST_FLAG,
+      Extract(Value(p),'/block_Exec_Resp/has_safs_flag/text()') As HAS_SAFS_FLAG,
+      Extract(Value(p),'/block_Exec_Resp/has_jnt_acc_flag/text()') As HAS_JNT_ACC_FLAG,
+      Extract(Value(p),'/block_Exec_Resp/has_jnt_depost_flag/text()') As HAS_JNT_DEPOST_FLAG
+
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/block_Exec_Resp'))) p)
+
+      LOOP
+   begin
+    INSERT INTO BLOCK_EXEC_RESP 
+    (
+      EXETR_SRVC_TASK_ID,
+      CUST_NAME,
+      CUST_ID,
+      CUST_ID_TYPE,
+      CUST_NAT_CD,
+      TOTAL_AMT,
+      SAR_TOTAL_AMT,
+      RQ_TOTAL_AMT,
+      HAS_ACC_FLAG,
+      HAS_DEPOST_FLAG,
+      HAS_SAFS_FLAG,
+      HAS_JNT_ACC_FLAG,
+      HAS_JNT_DEPOST_FLAG
+    )
+    VALUES
+    (
+      r.BLOCK_EXEC_SRVC_TASK_ID,
+      r.BLOCK_CUST_NAME,
+      r.BLOCK_CUST_ID,
+      r.BLOCK_CUST_ID_TYPE,
+      r.BLOCK_CUST_NAT_CD,
+      r.BLOCK_TOTAL_AMT,
+      r.SAR_TOTAL_AMT,
+      r.RQ_TOTAL_AMT,
+      r.HAS_ACC_FLAG,
+      r.HAS_DEPOST_FLAG,
+      r.HAS_SAFS_FLAG,
+      r.HAS_JNT_ACC_FLAG,
+      r.HAS_JNT_DEPOST_FLAG
+    )RETURNING EXETR_SRVC_TASK_ID INTO exetr_srvc_task_id_val;
+
+
+
+  end;
+  END LOOP;
+--============================== BLOCK_EXEC_RESP ends ==================================================================
+
+
+--============================== exec_Acc_Info starts ==================================================================
+/*
+<exec_Acc_Info>
+	<exetr_srvc_task_id> </exetr_srvc_task_id>
+	<acc_num> </acc_num>
+	<iban> </iban>
+	<inst> </inst>
+	<jnt_acc> </jnt_acc>
+	<acc_cur> </acc_cur>
+	<src_amt> </src_amt>
+	<exec_amt> </exec_amt>
+	<fx_rate> </fx_rate>
+	<exec_date> </exec_date>
+	<transfer_ref_no> </transfer_ref_no>
+	<transfer_status> </transfer_status>
+  <prd_Usr_Lst>
+    <prd_id> </prd_id>
+    <prd_type> </prd_type>
+    <prd_user_id> </prd_user_id>
+    <prd_user_id_type> </prd_user_id_type>
+    <prd_user_type> </prd_user_type>
+    <prd_user_name> </prd_user_name>
+  </prd_Usr_Lst>
+</exec_Acc_Info>
+
+
+  
+  
+*/
+FOR o IN
+
+      (SELECT ExtractValue(Value(p),'/exec_Acc_Info/iban/text()') AS  ACC_INFO_IBAN,
+      Extract(Value(p),'/exec_Acc_Info/exetr_srvc_task_id/text()').getnumberval() As ACC_INFO_EXETR_SRVC_TASK_ID,
+      Extract(Value(p),'/exec_Acc_Info/acc_num/text()') As ACC_INFO_ACC_NUM,
+      Extract(Value(p),'/exec_Acc_Info/inst/text()') As ACC_INFO_INST,
+      Extract(Value(p),'/exec_Acc_Info/jnt_acc/text()') As ACC_INFO_JNT_ACC,
+      Extract(Value(p),'/exec_Acc_Info/acc_cur/text()') As ACC_INFO_ACC_CUR,
+      Extract(Value(p),'/exec_Acc_Info/src_amt/text()').getnumberval() As ACC_INFO_SRC_AMT,
+      Extract(Value(p),'/exec_Acc_Info/exec_amt/text()').getnumberval() As ACC_INFO_EXEC_AMT,
+      Extract(Value(p),'/exec_Acc_Info/fx_rate/text()').getnumberval() As ACC_INFO_FX_RATE,
+      Extract(Value(p),'/exec_Acc_Info/exec_date/text()') As ACC_INFO_EXEC_DATE,
+      Extract(Value(p),'/exec_Acc_Info/transfer_ref_no/text()') As ACC_INFO_TRANSFER_REF_NO,      
+      Extract(Value(p),'/exec_Acc_Info/prd_Usr_Lst').getClobVal() As PRD_USR_LST,
+      Extract(Value(p),'/exec_Acc_Info/transfer_status/text()') As ACC_INFO_TRANSFER_STATUS
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/exec_Acc_Info'))) p
+      WHERE EXISTSNODE(INPUT_VAL,'/FIRespDetailsInput/exec_Acc_Info') = 1
+      )  
+      LOOP
+
+   begin
+    INSERT INTO EXEC_ACC_INFO
+    (
+      EXETR_SRVC_TASK_ID,
+      ACC_NUM,
+      IBAN,
+      INST,
+      JNT_ACC,
+      ACC_CUR,
+      SRC_AMT,
+      EXEC_AMT,
+      FX_RATE,
+      EXEC_DATE,
+      TRANSFER_REF_NO,
+      TRANSFER_STATUS
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+      o.ACC_INFO_ACC_NUM,
+      o.ACC_INFO_IBAN,
+      o.ACC_INFO_INST,
+      o.ACC_INFO_JNT_ACC,
+      o.ACC_INFO_ACC_CUR,
+      o.ACC_INFO_SRC_AMT,
+      o.ACC_INFO_EXEC_AMT,
+      o.ACC_INFO_FX_RATE,
+      to_date(o.ACC_INFO_EXEC_DATE, 'YYYY-MM-DD HH24:MI:SS'),
+--    sysdate,
+      o.ACC_INFO_TRANSFER_REF_NO,
+      o.ACC_INFO_TRANSFER_STATUS 
+    )RETURNING EXEC_ACC_INFO_ID INTO prd_id;
+
+
+o.PRD_USR_LST := CONCAT('<prd_lst>', o.PRD_USR_LST);
+o.PRD_USR_LST := CONCAT(o.PRD_USR_LST,'</prd_lst>');
+xml_PRD_USR_LST := new XMLTYPE(o.PRD_USR_LST);
+
+
+  end;
+
+  FOR t IN
+
+      (SELECT ExtractValue(Value(V),'/prd_Usr_Lst/prd_user_id/text()') AS  PRD_USR_LST_PRD_USR_ID,
+      Extract(Value(V),'/prd_Usr_Lst/prd_user_id_type/text()') As PRD_USR_LST_PRD_USR_ID_TYPE,
+      Extract(Value(V),'/prd_Usr_Lst/prd_user_type/text()') As PRD_USR_LST_PRD_USR_TYPE,
+      Extract(Value(V),'/prd_Usr_Lst/prd_user_name/text()') As PRD_USR_LST_PRD_USR_NAME
+      FROM TABLE(XMLSequence(Extract(xml_PRD_USR_LST,'/prd_lst/prd_Usr_Lst'))) V
+      WHERE EXISTSNODE(xml_PRD_USR_LST,'/prd_lst/prd_Usr_Lst/prd_user_id') = 1
+      )
+
+      LOOP 
+
+   begin
+
+    INSERT INTO PRD_USR_LST 
+    (
+      PRD_ID,
+      PRD_TYPE,
+      PRD_USER_ID,
+      PRD_USER_ID_TYPE,
+      PRD_USER_TYPE,
+      PRD_USER_NAME      
+    )
+    VALUES
+    (
+      prd_id,
+      '010',
+      t.PRD_USR_LST_PRD_USR_ID,
+      t.PRD_USR_LST_PRD_USR_ID,
+      t.PRD_USR_LST_PRD_USR_TYPE,
+      t.PRD_USR_LST_PRD_USR_NAME  
+    );   
+  end; 
+  END LOOP;
+
+  END LOOP;
+--============================== exec_Acc_Info Ends ==================================================================
+
+
+--============================== exec_Depost_Info starts ==================================================================
+/*
+ <exec_Depost_Info>
+   
+    <exetr_srvc_task_id>0</exetr_srvc_task_id>
+    <depost_num/>
+    <depost_cur/>
+    <depost_amt>0</depost_amt>
+    <exec_date/>
+  </exec_Depost_Info>
+
+*/
+FOR r IN
+      (SELECT ExtractValue(Value(p),'/exec_Depost_Info/depost_num/text()') AS  DEPOST_NUM,
+      Extract(Value(p),'/exec_Depost_Info/exetr_srvc_task_id/text()').getnumberval() As DEPOST_EXEC_SRVC_TASK_ID,
+      Extract(Value(p),'/exec_Depost_Info/depost_cur/text()') As DEPOST_CUR,
+      Extract(Value(p),'/exec_Depost_Info/depost_amt/text()').getnumberval() As DEPOST_AMT,
+      Extract(Value(p),'/exec_Depost_Info/exec_date/text()') As EXEC_DATE
+
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/exec_Depost_Info'))) p)
+
+      LOOP
+   begin
+    INSERT INTO EXEC_DEPOST_INFO 
+    (
+      EXETR_SRVC_TASK_ID,
+      DEPOST_NUM,
+      DEPOST_CUR,
+      DEPOST_AMT,
+      EXEC_DATE
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+      r.DEPOST_NUM,
+      r.DEPOST_CUR,
+      r.DEPOST_AMT,
+--      sysdate
+      to_date(r.EXEC_DATE, 'YYYY-MM-DD HH24:MI:SS')
+    );
+
+  end;
+  END LOOP;
+--============================== exec_Depost_Info ends ==================================================================
+
+
+
+--============================== exec_Safs_Info starts ==================================================================
+/*
+<exec_Safs_Info>
+    <exec_safe_info_id>0</exec_safe_info_id>
+    <exetr_srvc_task_id>0</exetr_srvc_task_id>
+    <exec_date/>
+  </exec_Safs_Info>
+
+*/
+FOR r IN
+      (SELECT ExtractValue(Value(p),'/exec_Safs_Info/exec_date/text()') AS  EXEC_DATE,
+      Extract(Value(p),'/exec_Safs_Info/exetr_srvc_task_id/text()').getnumberval() As SAFS_EXEC_SRVC_TASK_ID
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/exec_Safs_Info'))) p)
+
+      LOOP
+   begin
+    INSERT INTO EXEC_SAFE_INFO 
+    (
+      EXETR_SRVC_TASK_ID,
+      EXEC_DATE
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+--      sysdate
+      to_date(r.EXEC_DATE, 'YYYY-MM-DD HH24:MI:SS')
+    );
+
+  end;
+  END LOOP;
+--============================== exec_Safs_Info ends ==================================================================
+
+
+--============================== prd_Jnt_Accts Starts ==================================================================
+/*
+<prd_jnt_accts>
+	<prd_id> </prd_id>
+	<prd_type> </prd_type>
+	<acc_num> </acc_num>
+	<iban> </iban>
+</prd_jnt_accts>
+*/
+  FOR x IN
+      (SELECT ExtractValue(Value(p),'/prd_Jnt_Accts/acc_num/text()') AS  PRD_JNT_ACCTS_ACC_NUM,
+      Extract(Value(p),'/prd_Jnt_Accts/iban/text()') As PRD_JNT_ACCTS_IBAN
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/prd_Jnt_Accts'))) p
+      WHERE EXISTSNODE(INPUT_VAL,'/FIRespDetailsInput/prd_Jnt_Accts') =1
+      )    
+      LOOP
+
+   begin
+    INSERT INTO PRD_JNT_ACCTS
+    (
+      PRD_ID,
+      PRD_TYPE,
+      ACC_NUM,
+      IBAN
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+      '010',
+      x.PRD_JNT_ACCTS_ACC_NUM,
+      x.PRD_JNT_ACCTS_IBAN
+    );
+
+  end; 
+  END LOOP;  
+--============================== prd_Jnt_Accts Ends ==================================================================
+
+
+--============================== prd_Shrs starts ==================================================================
+/*
+<prd_Shrs>
+	<prd_id> </prd_id>
+	<prd_type> </prd_type>
+	<comp_name> </comp_name>
+</prd_Shrs>
+*/
+  FOR m IN
+      (SELECT ExtractValue(Value(p),'/prd_Shrs/prd_type/text()') AS  PRD_SHRS_PRD_TYPE,
+      Extract(Value(p),'/prd_Shrs/prd_id/text()').getnumberval() As PRD_SHRS_PRD_ID,
+      Extract(Value(p),'/prd_Shrs/comp_name/text()') As PRD_SHRS_COMP_NAME
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/prd_Shrs'))) p
+      WHERE EXISTSNODE(INPUT_VAL,'/FIRespDetailsInput/prd_Shrs') =1
+      )    
+      LOOP
+
+   begin
+    INSERT INTO PRD_SHRS
+    (
+      PRD_ID,
+      PRD_TYPE,
+      COMP_NAME  
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+      '010',
+      m.PRD_SHRS_COMP_NAME
+    );
+
+  end; 
+  END LOOP;
+--============================== prd_Shrs ends ==================================================================
+
+
+
+
+--============================== prd_Jnt_Depost starts ==================================================================
+/*
+
+  <prd_Jnt_Depost>
+    <prd_jnt_depost_id>0</prd_jnt_depost_id>
+    <prd_id>0</prd_id>
+    <prd_type/>
+    <depost_num/>
+  </prd_Jnt_Depost>
+  
+*/
+  FOR m IN
+      (SELECT ExtractValue(Value(p),'/prd_Jnt_Depost/prd_type/text()') AS  PRD_TYPE,
+      Extract(Value(p),'/prd_Jnt_Depost/prd_id/text()').getnumberval() As PRD_ID,
+      Extract(Value(p),'/prd_Jnt_Depost/depost_num/text()') As DEPOST_NUM
+      FROM TABLE(XMLSequence(Extract(INPUT_VAL,'/FIRespDetailsInput/prd_Jnt_Depost'))) p
+      WHERE EXISTSNODE(INPUT_VAL,'/FIRespDetailsInput/prd_Jnt_Depost') =1
+      )    
+      LOOP
+
+   begin
+    INSERT INTO PRD_JNT_DEPOST
+    (
+      PRD_ID,
+      PRD_TYPE,
+      DEPOST_NUM  
+
+    )
+    VALUES
+    (
+      exetr_srvc_task_id_val,
+      '010',
+      m.DEPOST_NUM
+    );
+
+  end; 
+  END LOOP;
+--============================== prd_Jnt_Depost ends ==================================================================
+
+
+EXCEPTION
+  WHEN OTHERs THEN
+      Raise_application_error(-20322, 'UNKNOWN ERROR>>'|| SQLERRM); 
+
+END INSERT_BLOCK_RESP_SP;
