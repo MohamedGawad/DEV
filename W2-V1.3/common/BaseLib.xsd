@@ -889,7 +889,8 @@
 	<simpleType name="T_BaseAmt_PosAmt">
 		<restriction base='decimal'>
 			<minExclusive value="0"></minExclusive>
-			<maxExclusive value="99999999999999999999"></maxExclusive>
+			<maxExclusive value="999999999999999"></maxExclusive>
+			<pattern value="[0-9.]{1,15}"/>
 		</restriction>
 	</simpleType>
 	
@@ -897,7 +898,8 @@
 	<simpleType name="T_BaseAmt">
 		<restriction base='decimal'>
 			<minInclusive value="0"></minInclusive>
-			<maxInclusive value="99999999999999999999"></maxInclusive>
+			<maxInclusive value="999999999999999"></maxInclusive>
+			<pattern value="[0-9.]{1,15}"/>
 		</restriction>
 	</simpleType>
 	

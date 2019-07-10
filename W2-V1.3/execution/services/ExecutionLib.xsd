@@ -447,8 +447,9 @@
 			<element minOccurs="0" name="XferDtTm" type="base:T_MsgDtTm"></element>
 			<element minOccurs="0" name="RefNum">
 				<simpleType>
-					<restriction base="string">
-						<length value="24" />
+					<restriction base="base:T_NSPC_EN_Text">
+						<minLength value="4"/>
+						<maxLength value="24"/>
 					</restriction>
 				</simpleType>
 			</element>
@@ -607,7 +608,7 @@
 
 	<complexType name="T_FundXferCndtn">
 		<sequence>
-			<element name="Amt" type="base:T_BaseAmt" minOccurs="1"
+			<element name="Amt" type="base:T_BaseAmt_PosAmt" minOccurs="1"
 				maxOccurs="1">
 			</element>
 			<element name="Benf" type="base:T_Benf" minOccurs="1"
