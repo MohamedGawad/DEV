@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+
+<log4j:configuration>
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d] [%-5p] [%C]: %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="commit" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMALogs/commit.log" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="BPMNAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPMN/BPMNLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="BPELAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/BPELLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="SLAAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/SLALOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="BANAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/BANLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="DENYAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/DENYLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="BLOCKAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/BLOCKLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="GARNISHAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/GARNISHLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="LIFTAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/LIFTLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="15MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	<appender name="COMMONAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/COMMONLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="ACCINFOAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/ACCINFOLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+		<appender name="BALINFOAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/BALINFOLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+		<appender name="DEPOINFOAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/DEPOINFOLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+		<appender name="SAFINFOAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/SAFINFOLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+		<appender name="LIABINFOAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/LIABINFOLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="TRANSFERAPPDR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/apps/IBM/BPM/profiles/PSNodeProfile/logs/PSDevServer/SAMA-BPEL/TRANSFERLOG.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="MaxBackupIndex" value="15" />
+		<param name="MaxFileSize" value="30MB" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-23d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] [%p] [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<logger name="SAMA" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="BPMNAPPDR" />
+	</logger>
+	
+	<logger name="java.sql">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="org.springframework">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="org.apache.commons">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="BPELLOGGER">
+		<level value="info" />
+		<appender-ref ref="BPELAPPDR" />
+	</logger>
+	
+	<logger name="SLALOGGER">
+		<level value="info" />
+		<appender-ref ref="SLAAPPDR" />
+	</logger>
+
+	
+	<logger name="BANLOGGER">
+		<level value="info" />
+		<appender-ref ref="BANAPPDR" />
+	</logger>
+	
+	<logger name="DENYLOGGER">
+		<level value="info" />
+		<appender-ref ref="DENYAPPDR" />
+	</logger>
+	
+	<logger name="BLOCKLOGGER">
+		<level value="info" />
+		<appender-ref ref="BLOCKAPPDR" />
+	</logger>
+	
+	<logger name="GARNISHLOGGER">
+		<level value="info" />
+		<appender-ref ref="GARNISHAPPDR" />
+	</logger>
+	
+	<logger name="LIFTLOGGER">
+		<level value="info" />
+		<appender-ref ref="LIFTAPPDR" />
+	</logger>
+	<logger name="COMMONLOGGER">
+		<level value="info" />
+		<appender-ref ref="COMMONAPPDR" />
+	</logger>
+	
+	<logger name="ACCINFOLOGGER">
+		<level value="info" />
+		<appender-ref ref="ACCINFOAPPDR" />
+	</logger>
+	<logger name="BALINFOLOGGER">
+		<level value="info" />
+		<appender-ref ref="BALINFOAPPDR" />
+	</logger>
+	<logger name="DEPOINFOLOGGER">
+		<level value="info" />
+		<appender-ref ref="DEPOINFOAPPDR" />
+	</logger>
+	<logger name="SAFINFOLOGGER">
+		<level value="info" />
+		<appender-ref ref="SAFINFOAPPDR" />
+	</logger>
+	<logger name="LIABINFOLOGGER">
+		<level value="info" />
+		<appender-ref ref="LIABINFOAPPDR" />
+	</logger>
+	
+	<logger name="TRANSFERLOGGER">
+		<level value="info" />
+		<appender-ref ref="TRANSFERAPPDR" />
+	</logger>
+	
+	<root>
+		<level value="debug" />
+		<appender-ref ref="commit" />
+	</root>
+
+</log4j:configuration>
